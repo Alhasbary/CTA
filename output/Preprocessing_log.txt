@@ -1,0 +1,372 @@
+
+
+C:\Users\DELL\PycharmProjects\CTA_master\main.py
+Start time: 9/6/2023 7:26.6 
+1- Extracted bioactivity data from ChEMBL with the following selection constraints:
+    - Canonical smiles (not null)
+    - Accession (not null)
+    - Assay type (binding assays)
+    - Confidence score >= [8, 9]
+    - Standard units (nM)
+    - Standard value <= 10000
+    - Standard relation (=)
+    - Standard type (IC50, Ki, Kd, or EC50)
+    - pChembl value (not null)
+    - Data validity comment (null or manually validated)
+    - Activity comment (not undetermined, inconclusive, unspecified, inactive, or not active)
+    - Potential duplicate (0)
+    
+    Run the code with -h args to choose the desired settings.
+    
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+Extraction completed in 84.58 seconds.
+2- Clean SMILES strings, preprocess them using RDKit and MolVS. The preprocessing steps include normalizing
+            structures, desalting, and neutralizing charge. Users can choose to disable desalting and charge neutralization
+            if desired. Additionally, the user can specify the number of CPU cores used for processing.
+    
+    Run the code with -h args to choose the desired settings.
+    
+ChEMBL data before preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+
+
+C:\Users\DELL\PycharmProjects\CTA_master\main.py
+Start time: 9/6/2023 7:46.24 
+1- Extracted bioactivity data from ChEMBL with the following selection constraints:
+    - Canonical smiles (not null)
+    - Accession (not null)
+    - Assay type (binding assays)
+    - Confidence score >= [8, 9]
+    - Standard units (nM)
+    - Standard value <= 10000
+    - Standard relation (=)
+    - Standard type (IC50, Ki, Kd, or EC50)
+    - pChembl value (not null)
+    - Data validity comment (null or manually validated)
+    - Activity comment (not undetermined, inconclusive, unspecified, inactive, or not active)
+    - Potential duplicate (0)
+    
+    Run the code with -h args to choose the desired settings.
+    
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+Extraction completed in 55.89 seconds.
+2- Clean SMILES strings, preprocess them using RDKit and MolVS. The preprocessing steps include normalizing
+            structures, desalting, and neutralizing charge. Users can choose to disable desalting and charge neutralization
+            if desired. Additionally, the user can specify the number of CPU cores used for processing.
+    
+    Run the code with -h args to choose the desired settings.
+    
+ChEMBL data before preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1000
+    Number of unique chembl targets  = 199
+    Number of unique uniprot targets = 199
+    Number of unique compounds       = 605
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  3.0 	 mean =  5.025125628140704 	 max =  30
+
+
+C:\Users\DELL\PycharmProjects\CTA_master\main.py
+Start time: 9/6/2023 7:50.13 
+1- Extracted bioactivity data from ChEMBL with the following selection constraints:
+    - Canonical smiles (not null)
+    - Accession (not null)
+    - Assay type (binding assays)
+    - Confidence score >= [8, 9]
+    - Standard units (nM)
+    - Standard value <= 10000
+    - Standard relation (=)
+    - Standard type (IC50, Ki, Kd, or EC50)
+    - pChembl value (not null)
+    - Data validity comment (null or manually validated)
+    - Activity comment (not undetermined, inconclusive, unspecified, inactive, or not active)
+    - Potential duplicate (0)
+    
+    Run the code with -h args to choose the desired settings.
+    
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+Extraction completed in 53.68 seconds.
+2- Clean SMILES strings, preprocess them using RDKit and MolVS. The preprocessing steps include normalizing
+            structures, desalting, and neutralizing charge. Users can choose to disable desalting and charge neutralization
+            if desired. Additionally, the user can specify the number of CPU cores used for processing.
+    
+    Run the code with -h args to choose the desired settings.
+    
+ChEMBL data before preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1000
+    Number of unique chembl targets  = 199
+    Number of unique uniprot targets = 199
+    Number of unique compounds       = 605
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  3.0 	 mean =  5.025125628140704 	 max =  30
+
+
+C:\Users\DELL\PycharmProjects\CTA_master\main.py
+Start time: 9/6/2023 7:52.5 
+1- Extracted bioactivity data from ChEMBL with the following selection constraints:
+    - Canonical smiles (not null)
+    - Accession (not null)
+    - Assay type (binding assays)
+    - Confidence score >= [8, 9]
+    - Standard units (nM)
+    - Standard value <= 10000
+    - Standard relation (=)
+    - Standard type (IC50, Ki, Kd, or EC50)
+    - pChembl value (not null)
+    - Data validity comment (null or manually validated)
+    - Activity comment (not undetermined, inconclusive, unspecified, inactive, or not active)
+    - Potential duplicate (0)
+    
+    Run the code with -h args to choose the desired settings.
+    
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+Extraction completed in 55.07 seconds.
+2- Clean SMILES strings, preprocess them using RDKit and MolVS. The preprocessing steps include normalizing
+            structures, desalting, and neutralizing charge. Users can choose to disable desalting and charge neutralization
+            if desired. Additionally, the user can specify the number of CPU cores used for processing.
+    
+    Run the code with -h args to choose the desired settings.
+    
+ChEMBL data before preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1000
+    Number of unique chembl targets  = 199
+    Number of unique uniprot targets = 199
+    Number of unique compounds       = 605
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  3.0 	 mean =  5.025125628140704 	 max =  30
+
+
+C:\Users\DELL\PycharmProjects\CTA_master\main.py
+Start time: 9/6/2023 7:55.9 
+1- Extracted bioactivity data from ChEMBL with the following selection constraints:
+    - Canonical smiles (not null)
+    - Accession (not null)
+    - Assay type (binding assays)
+    - Confidence score >= [8, 9]
+    - Standard units (nM)
+    - Standard value <= 10000
+    - Standard relation (=)
+    - Standard type (IC50, Ki, Kd, or EC50)
+    - pChembl value (not null)
+    - Data validity comment (null or manually validated)
+    - Activity comment (not undetermined, inconclusive, unspecified, inactive, or not active)
+    - Potential duplicate (0)
+    
+    Run the code with -h args to choose the desired settings.
+    
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+Extraction completed in 58.60 seconds.
+2- Clean SMILES strings, preprocess them using RDKit and MolVS. The preprocessing steps include normalizing
+            structures, desalting, and neutralizing charge. Users can choose to disable desalting and charge neutralization
+            if desired. Additionally, the user can specify the number of CPU cores used for processing.
+    
+    Run the code with -h args to choose the desired settings.
+    
+ChEMBL data before preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1067374
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578574
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.82295390404516 	 max =  9627
+ChEMBL data after preprocessing:
+Compound-target pairs:
+    Number of bioactivity records    = 1067276
+    Number of unique chembl targets  = 5317
+    Number of unique uniprot targets = 5315
+    Number of unique compounds       = 578520
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  1 	 median =  18.0 	 mean =  200.80451552210724 	 max =  9626
+ChEMBL preprocessing completed in 879.33 seconds.
+
+Start generating fingerprints for 576318 ChEMBL compounds
+invalid fingerprints  15
+Generating fingerprints for 576303 smiles took  114.7471 seconds.
+Start processing the 2 datasets: ['CMAUP', 'NPASS']
+
+===========
+Data set: CMAUP
+===========
+
+SMILES strings before preprocessing:
+Number of compounds: 6793
+Number of unique compounds: 6793
+SMILES strings after preprocessing:
+Number of compounds: 6783
+Number of unique compounds: 6765
+ preprocessing completed in 12.37 seconds.
+
+Start generating fingerprints for 6765 smiles
+invalid fingerprints  0
+Generating fingerprints for 6765 smiles took  4.0650 seconds.
+3- Perform chemical similarity searches between two datasets. RDKit is used to generate molecular fingerprints 
+    for each compound. The cleaned SMILES strings for each compound are converted into 2048-bit ecfp fingerprints 
+    with a radius of 2. Targets that interact with at least one compound having a Tanimoto coefficient (Tc) of 
+    0.85 or higher with any query compound are considered and saved.
+
+    To generate fingerprints for SMILES strings, the user can choose one of four specified fingerprint types: Avalon, 
+    Morgan ECFP, Morgan FCFP, and MACCS. The user can also specify the desired settings for nBits to control the length 
+    of the generated fingerprint and the radius parameter, which governs the size of the substructures used to generate 
+    the fingerprint. Additionally, the user can set a custom Tc similarity threshold.
+
+    The code utilizes the Parallel function from the joblib library to perform similarity searches with a batch size of 
+    256. This allows for efficient processing while addressing memory constraints. Users can specify the desired 
+    batch size.
+
+    Run the code with -h args to choose the desired settings.
+    
+
+Start chemical similarity searches for 6765 smiles
+
+Results = (3790, 3)
+
+=====================================
+Summary		ChEMBL		NPs
+=====================================
+100 identical    = 1758	1827
+[90, 99] similar = 202	235
+[85, 90] similar = 387	416
+Total Uniques    = 1956 	 2039
+ Simlarity searching completed in 1132.81 seconds.
+4- Retrieve potential targets for each SMILES string based on similarity searching.
+
+Chemical similarity searches with 0.85 similarity threshold results:
+	1186 potential targets for 2039 SMILES strings.
+More details are stored in output\CMAUP_potential_targets_ss.csv
+After preprocessing the data for machine learning models,
+Compound-target pairs:
+    Number of bioactivity records    = 613521
+    Number of unique chembl targets  = 985
+    Number of unique uniprot targets = 985
+    Number of unique compounds       = 385038
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  10 	 median =  148.0 	 mean =  622.863959390863 	 max =  7942
+
+Creating the compound-target activity pair dataset took 13.9008 seconds.
+
+===========
+Data set: NPASS
+===========
+
+SMILES strings before preprocessing:
+Number of compounds: 95674
+Number of unique compounds: 95674
+SMILES strings after preprocessing:
+Number of compounds: 95602
+Number of unique compounds: 94410
+ preprocessing completed in 146.96 seconds.
+
+Start generating fingerprints for 94410 smiles
+invalid fingerprints  5
+Generating fingerprints for 94405 smiles took  20.8838 seconds.
+3- Perform chemical similarity searches between two datasets. RDKit is used to generate molecular fingerprints 
+    for each compound. The cleaned SMILES strings for each compound are converted into 2048-bit ecfp fingerprints 
+    with a radius of 2. Targets that interact with at least one compound having a Tanimoto coefficient (Tc) of 
+    0.85 or higher with any query compound are considered and saved.
+
+    To generate fingerprints for SMILES strings, the user can choose one of four specified fingerprint types: Avalon, 
+    Morgan ECFP, Morgan FCFP, and MACCS. The user can also specify the desired settings for nBits to control the length 
+    of the generated fingerprint and the radius parameter, which governs the size of the substructures used to generate 
+    the fingerprint. Additionally, the user can set a custom Tc similarity threshold.
+
+    The code utilizes the Parallel function from the joblib library to perform similarity searches with a batch size of 
+    256. This allows for efficient processing while addressing memory constraints. Users can specify the desired 
+    batch size.
+
+    Run the code with -h args to choose the desired settings.
+    
+
+Start chemical similarity searches for 94405 smiles
+
+Results = (15089, 3)
+
+=====================================
+Summary		ChEMBL		NPs
+=====================================
+100 identical    = 3728	5972
+[90, 99] similar = 591	1427
+[85, 90] similar = 1146	2658
+Total Uniques    = 4229 	 8307
+ Simlarity searching completed in 8025.72 seconds.
+4- Retrieve potential targets for each SMILES string based on similarity searching.
+
+Chemical similarity searches with 0.85 similarity threshold results:
+	1892 potential targets for 8307 SMILES strings.
+More details are stored in output\NPASS_potential_targets_ss.csv
+After preprocessing the data for machine learning models,
+Compound-target pairs:
+    Number of bioactivity records    = 738431
+    Number of unique chembl targets  = 1495
+    Number of unique uniprot targets = 1497
+    Number of unique compounds       = 461862
+    Target types included: ['SINGLE PROTEIN']
+
+Compound statistics in the targets:
+min =  10 	 median =  113.0 	 mean =  493.27388109552436 	 max =  7942
+
+Creating the compound-target activity pair dataset took 18.3876 seconds.
+
+Finish time: 9/6/2023 10:49.5 
