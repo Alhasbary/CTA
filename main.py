@@ -5,7 +5,6 @@ Compound-Target Activity (CTA) Prediction Program.
 Inputs:
    - List of optional parameters.
    - input: Full path to the data folder containing SMILES string lists (e.g., *_smiles.csv) and the mini-ChEMBL database [Optional]. It may contain more than one list. The tool processes them sequentially. Each file must be a CSV file that contains smiles strings in a column named 'smiles' and compound id in a column named 'smiles_id'.
-   - `--output`: Full path to save the results [Optional].
    - output: Full path to save the results [Optional].
 
 Output: 
