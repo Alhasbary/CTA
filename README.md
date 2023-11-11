@@ -94,4 +94,4 @@ Feel free to explore the program's capabilities for ligand-based CTA prediction 
 
 If you use this tool for scientific work that gets published, kindly include a citation of the following paper:
 
-A. Abdulhakeem Mansour Alhasbary and N. Hashimah Ahamed Hassain Malim, "A Similarity-Based Target Prediction Tool for Natural Products," Mol. Inform., vol. -, no. -, p. -, date , doi: .
+Authors, "Exploring Natural Product Potential: A Similarity-Based Target Prediction Tool for Natural Products," Mol. Inform., vol. -, no. -, p. -, date , doi: .
