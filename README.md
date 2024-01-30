@@ -92,6 +92,4 @@ Create a custom mini-ChEMBL SQLite database tailored to fulfill specific applica
 
 Feel free to explore the program's capabilities for ligand-based CTA prediction with your datasets! Please ensure that each dataset is provided as a CSV file, with smiles strings in a column named 'smiles' and compound IDs in a column named 'smiles_id'.
 
-If you use this tool for scientific work that gets published, kindly include a citation of the following paper:
 
-Authors, "Exploring Natural Products Potential: A Similarity-Based Target Prediction Tool for Natural Products," Mol. Inform., vol. -, no. -, p. -, date , doi: .
