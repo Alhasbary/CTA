@@ -10,7 +10,7 @@ Inputs:
    - destination: Full path to save the custom ChEMBL version as 'mini_chembl.db' [Optional].
 
 Output: 
-   - 'mini_chembl.db' is stored in the specified output directory, containing customized information for the application's use.
+   - 'mini_chembl.db' is stored in the specified destination directory, containing customized information for the application's use.
 
 Usage:
    - For help:
@@ -173,6 +173,17 @@ def create_mini_chembl_database(dataPath, destinationPath='input'):
         CONSTRAINT pk_assays_assay_id PRIMARY KEY (assay_id),
         CONSTRAINT fk_assays_tid FOREIGN KEY(tid) REFERENCES target_dictionary (tid) ON DELETE CASCADE
         );
+
+        CREATE TABLE init (
+        confidence_score	INTEGER NOT NULL,
+        standard_value	REAL NOT NULL,
+        salt	INTEGER NOT NULL,
+        charge	INTEGER NOT NULL,
+        fingerprint	VARCHAR(10) NOT NULL,
+        nBits	INTEGER NOT NULL,
+        radius	INTEGER NOT NULL,
+        CTA_Tc	REAL NOT NULL
+        );
         ''')
 
         # Copy molecule_dictionary table...
@@ -261,7 +272,10 @@ def create_mini_chembl_database(dataPath, destinationPath='input'):
             mini_chembl_cur.execute('''INSERT INTO assays (assay_id, assay_type, description, tid, confidence_score) 
             VALUES (?, ?, ?, ?, ?)''', (row[0], row[1], row[2], row[3], row[4]))
         
-       
+        # Create a parameter options table that includes default values for each parameter...
+        mini_chembl_cur.execute('''INSERT INTO init (confidence_score, standard_value, salt, charge, fingerprint, nBits, radius, CTA_Tc) 
+        VALUES (8, 10000.0, 1, 1, 'ecfp', 2048, 2, 0.85)''')
+
 
         # Commit the changes
         mini_chembl.commit()
