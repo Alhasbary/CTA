@@ -20,7 +20,7 @@ This tool enables chemical similarity searches, a fundamental step in ligand-bas
 
 The output of the first stage of the tool is a CTA reference dataset, which includes identified targets and their corresponding compounds from ChEMBL. This dataset is valuable for users to analyse and construct models, enabling accurate target predictions for NP compounds.
 
-### 5. **2.4.5.	rankTargets: Retrieving ranked potential targets**
+### 5. **rankTargets: Retrieving ranked potential targets**
 The output of the second stage of the tool consists of two ranked lists of potential targets for each input query. The first list is based on the top similar reference compound, while the second list incorporates the mean of the top three similar reference compounds in the ranking calculations.
 
 
@@ -29,8 +29,8 @@ The tool provides various parameters to customize the analysis. Below is a detai
 
 | Parameter        | Description                                                                                                                                                    | Default Value  |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
-| `confidence_score` (`--cs`)  | Confidence score (for generate_CTA script). The confidence scores range from 0 (uncurated data) to 9 (high confidence in a single protein target).  | `8`            |
-| `standard_value` (`--sv`)    | Activity values in nM measurement (for generate_CTA script).                                                                                       | `10000` nM     |
+| `confidence_score`   | Confidence score (for generate_CTA script). The confidence scores range from 0 (uncurated data) to 9 (high confidence in a single protein target).  | `8`            |
+| `standard_value`    | Activity values in nM measurement (for generate_CTA script).                                                                                       | `10000` nM     |
 | `salt`           | Whether to disable desalting preprocess. False: disable desalting.                                                                                            | `True`         |
 | `charge`         | Whether to disable neutralization of charge preprocess. False: disable neutralization of charge.                                                               | `True`         |
 | `fingerprint`    | Desired fingerprint type (avalon, ecfp, fcfp, or maccs).                                                                                                       | `ecfp`         |
