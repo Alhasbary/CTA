@@ -37,7 +37,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 | `nBits`          | Number of bits parameter that specifies the length of the generated fingerprint (avalon, ecfp, or fcfp).                                                       | `2048`         |
 | `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`            |
 | `CTA_Tc`         | Desired value for CTA 'Tc' similarity threshold (0.1-1.0).                                                                                                     | `0.85`         |
-| `top_k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
+| `top_k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `1`            |
 | `batch`          | Desired batch size value (16-512) for chunk-based searches based on memory size.                                                                               | `256`          |
 | `n_jobs`         | Number of CPU cores to use.                                                                                                                                   | `-1` (all available CPU cores) |
 | `agg`            | Desired aggregation type (min, max, mean, or median).                                                                                                          | `median`       |
@@ -65,7 +65,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 ### Create a Custom mini-ChEMBL SQLite Database. 
 
 Create a custom mini-ChEMBL SQLite database tailored to fulfill specific application requirements. In our case, it significantly reduces the storage size from 22.4 GB (ChEMBL32) to just 714 MB.
-***This step was performed in advance using the default parameter values and does not need to be repeated during runtime.***
+***This step was performed in advance using the default parameter values and does not need to be rerun unless users wish to change the default parameter options or use different version of ChEMBL database.***
 
 - Inputs:
    - data: Full path to the ChEMBL dataset [Required].
@@ -93,7 +93,8 @@ Create a custom mini-ChEMBL SQLite database tailored to fulfill specific applica
 
 ### Genrate the Compound-Target Activity (CTA) reference dataset
 
-***This step was performed in advance using the default parameter values and does not need to be rerun unless users wish to change the default parameter settings or use a different NP source than COCONUT***
+ChEMBL version 32.0, COCONUT version 1.0 datasets were utilized to create the CTA reference dataset. 
+***This step was performed in advance using the default parameter values and does not need to be rerun unless users wish to change the default parameter options or use different datasets resource than ChEMBL version 32.0 and COCONUT version 1.0***
 
 - Inputs:
    - List of optional parameters.
@@ -120,7 +121,7 @@ Create a custom mini-ChEMBL SQLite database tailored to fulfill specific applica
           
 ### Identify the potential target(s)
 
-***This script takes SMILES-formatted input list(s) of natural product(s) and identifies potential target(s) using fingerprinting and similarity search methods based on the CTA reference dataset.***
+This script takes SMILES-formatted input list(s) of natural product(s) and identifies potential target(s) using fingerprinting and similarity search methods based on the CTA reference dataset.
 
 - Inputs:
    - List of optional parameters.
