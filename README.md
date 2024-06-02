@@ -37,7 +37,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 | `nBits`          | Number of bits parameter that specifies the length of the generated fingerprint (avalon, ecfp, or fcfp).                                                       | `2048`         |
 | `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`            |
 | `CTA_Tc`         | Desired value for CTA 'Tc' similarity threshold (0.1-1.0).                                                                                                     | `0.85`         |
-| `top_k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `1`            |
+| `top_k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
 | `batch`          | Desired batch size value (16-512) for chunk-based searches based on memory size.                                                                               | `256`          |
 | `n_jobs`         | Number of CPU cores to use.                                                                                                                                   | `-1` (all available CPU cores) |
 | `agg`            | Desired aggregation type (min, max, mean, or median).                                                                                                          | `median`       |
