@@ -29,15 +29,15 @@ The tool provides various parameters to customize the analysis. Below is a detai
 
 | Parameter        | Description                                                                                                                                                    | Default Value  |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
-| `confidence_score`   | Confidence score (for generate_CTA script). The confidence scores range from 0 (uncurated data) to 9 (high confidence in a single protein target).  | `8`            |
-| `standard_value`    | Activity values in nM measurement (for generate_CTA script).                                                                                       | `10000` nM     |
-| `salt`           | Whether to disable desalting preprocess. False: disable desalting.                                                                                            | `True`         |
-| `charge`         | Whether to disable neutralization of charge preprocess. False: disable neutralization of charge.                                                               | `True`         |
+| `cs`   | Confidence score (for generate_CTA script). The confidence scores range from 0 (uncurated data) to 9 (high confidence in a single protein target).  | `8`            |
+| `sv`    | Activity values in nM measurement (for generate_CTA script).                                                                                       | `10000` nM     |
+| `salt`           | Whether to disable desalting preprocess. False: disable desalting.                                                                                            | `True` (enable)         |
+| `charge`         | Whether to disable neutralization of charge preprocess. False: disable neutralization of charge.                                                               | `True` (enable)        |
 | `fingerprint`    | Desired fingerprint type (avalon, ecfp, fcfp, or maccs).                                                                                                       | `ecfp`         |
 | `nBits`          | Number of bits parameter that specifies the length of the generated fingerprint (avalon, ecfp, or fcfp).                                                       | `2048`         |
-| `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`            |
+| `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`  (ECFP4)          |
 | `CTA_Tc`         | Desired value for CTA 'Tc' similarity threshold (0.1-1.0).                                                                                                     | `0.85`         |
-| `top_k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
+| `k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
 | `batch`          | Desired batch size value (16-512) for chunk-based searches based on memory size.                                                                               | `256`          |
 | `n_jobs`         | Number of CPU cores to use.                                                                                                                                   | `-1` (all available CPU cores) |
 | `agg`            | Desired aggregation type (min, max, mean, or median).                                                                                                          | `median`       |
