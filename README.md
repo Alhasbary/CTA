@@ -56,7 +56,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 ## Installation
 
 1. Download the repository and extract files to your desired location.
-2. Download the ChEMBL SQLite dataset from [ChEMBL Downloads](https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/).
+2. Download the ChEMBL SQLite dataset from [ChEMBL Downloads](https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/) (***if needed, see Usage section***).
 3. Open a command-line window (Windows) or a terminal (Linux).
 4. Run the Python scripts as described below.
 
