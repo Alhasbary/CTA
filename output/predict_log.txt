@@ -1,0 +1,79 @@
+
+
+.\predict.py --k 5
+Start time: 6/3/2024 11:44.32 
+
+Retrieving the CTA reference dataset ...
+Compound-target pairs:
+    Number of bioactivity records    = 809990
+    Number of unique uniprot targets = 2858
+    Number of unique compounds       = 522922
+
+Compound statistics in the targets:
+min =  1 	 median =  39.0 	 mean =  283.41147655703287 	 max =  7878 
+
+Retrieving took 13.7067 seconds.
+Generating fingerprints for 522922 CTA smiles ...
+Generating fingerprints took  108.9729 seconds.
+
+Start processing the ['QueryList1', 'QueryList2'] Query sets:
+
+==================
+Data set: QueryList1
+==================
+
+SMILES strings before preprocessing:
+Number of compounds: 10
+Number of unique compounds: 10
+
+SMILES strings after preprocessing:
+Number of compounds: 10
+Number of unique compounds: 10
+ preprocessing completed in 3.24 seconds.
+
+Perform chemical similarity searches. 
+    The cleaned SMILES strings for each compound are converted into 2048-bit ecfp fingerprints 
+    with a radius of 2.
+
+Start chemical similarity searches for 10 smiles
+
+Similarity search completed in 39.49 seconds.
+
+Retrieve potential targets for each SMILES string.
+
+
+Results:
+	Identified 2855 potential targets based on the mean similarity scores of the top k reference compounds for 10 SMILES strings.
+	Additional details are stored in output\QueryList1_potential_targets_based_on_ecfp_with_k_value_of_{k}.csv
+Retrieving the potential targets took 73.7912 seconds.
+
+==================
+Data set: QueryList2
+==================
+
+SMILES strings before preprocessing:
+Number of compounds: 10
+Number of unique compounds: 10
+
+SMILES strings after preprocessing:
+Number of compounds: 10
+Number of unique compounds: 10
+ preprocessing completed in 4.05 seconds.
+
+Perform chemical similarity searches. 
+    The cleaned SMILES strings for each compound are converted into 2048-bit ecfp fingerprints 
+    with a radius of 2.
+
+Start chemical similarity searches for 10 smiles
+
+Similarity search completed in 38.10 seconds.
+
+Retrieve potential targets for each SMILES string.
+
+
+Results:
+	Identified 2855 potential targets based on the mean similarity scores of the top k reference compounds for 10 SMILES strings.
+	Additional details are stored in output\QueryList2_potential_targets_based_on_ecfp_with_k_value_of_{k}.csv
+Retrieving the potential targets took 81.8434 seconds.
+
+Finish time: 6/3/2024 11:50.36 
