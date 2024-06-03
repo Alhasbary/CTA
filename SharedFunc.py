@@ -84,7 +84,7 @@ def assert_CTA_resource_files(log, args):
         print("The mini-ChEMBL database file must be an SQLite database named 'mini_chembl.db'. Please refer to 'README.md' for more information.", file=log)            
         return False
 
-    args.NPs_resource = glob.glob(args.inputPath + "/NPs_resource.csv")
+    args.NPs_resource = glob.glob(args.inputPath + "/NPs_resource.smi")
     if len(args.NPs_resource) == 0:
         print("Cannot find the NPs resource file!", file=log)
         print("The NPs resource file must be a CSV named 'NPs_resource.csv' containing SMILES strings in a column named 'smiles' and compound IDs in a column named 'smiles_id'.", file=log)            
@@ -321,7 +321,7 @@ def generate_CTA_reference_dataset(log, args):
         nBits = parameters['nBits'].values[0]
         radius = parameters['radius'].values[0]
         CTA_Tc = parameters['CTA_Tc'].values[0]
-         desc = f'''Compound-Target Activity (CTA) Prediction Program:
+        desc = f'''Compound-Target Activity (CTA) Prediction Program:
                 Steps of Generating the CTA:
                 1. Data Extraction from ChEMBL:
                     Selects bioactivity data based on specific constraints:
@@ -352,7 +352,7 @@ def generate_CTA_reference_dataset(log, args):
 
                 4. Generate CTA Data Set:
                     Performs chemical similarity searches, considering:
-                        - ChEMBL records whose targets interact with at least one compound having a Tc of {args.CTA_Tc} or higher with any of the source NP compounds are considered and saved (Parameter option: --CTA_Tc)
+                        - ChEMBL records whose targets interact with at least one compound having a Tc of {CTA_Tc} or higher with any of the source NP compounds are considered and saved (Parameter option: --CTA_Tc)
 
                 To adjust the parameter options for the generating steps, rerun the program and specify the desired options. 
                 The processing time for the generating steps with default parameter options is approximately 12 hours.
@@ -363,33 +363,46 @@ def generate_CTA_reference_dataset(log, args):
                     - Minimum number of compounds ({args.minCompounds}) (Parameter option: --minCompounds)
                     - Maximum number of compounds ({args.maxCompounds}) (Parameter option: --maxCompounds)\n
                 '''
-        print(desc, file=log)            
-        if (confidence_score!= args.confidence_score) or \
-        (standard_value != args.standard_value) or \
-        (salt != int(args.salt)) or \
-        (charge != int(args.charge)) or \
-        (fingerprint != args.fingerprint) or \
-        (nBits != args.nBits) or \
-        (radius != args.radius) or \
-        (CTA_Tc != args.CTA_Tc):
-            print('\nThe steps to creat the CTA with default parameter options take approximately 12 hours to complete.')
-            inp = input('Would you like to continue with the new parameter options? ([y]/n): ').strip().lower() or 'y'
-            if inp == 'y':  
-                print('\nStarting the generating steps. Estimated completion time is around 12 hours.', file=log)      
-                
-                # Preprocess all ChEMBL SMILES strings, clean and generate fingerprints by RDKit and MolVS.
-                clean_ChEMBL_structures = preprocess_ChEMBL_SMILES(log, args)  
-                ChEMBL_fps = clean_ChEMBL_structures[['uniprot', 'molregno', 'fp_base64']].drop_duplicates().reset_index(drop=True)
-                ChEMBL_fps['fp'] = ChEMBL_fps['fp_base64'].apply(lambda x: convert_from_base64(args, x))      
-                        
-                # Preprocess all NPs SMILES strings, clean and generate fingerprints by RDKit and MolVS.
-                fname = args.NPs_resource[0]                
-                clean_NPs_structures = preprocess_NPs_SMILES(log, args, fname)        
-                clean_NPs_structures['fp'] = clean_NPs_structures['fp_base64'].apply(lambda x: convert_from_base64(args, x))    
-                
-                # Extracting unique UniProt identifiers for ChEMBL targets interacting with similar compounds
-                interact_ChEMBL_targets = CTA_conductSS(log, args, clean_NPs_structures[['smiles_id', 'fp']], ChEMBL_fps[['uniprot', 'molregno', 'fp']], args.CTA_Tc)                     
-                
+        if CTA_Tc == 100:
+            initial_run = True
+        else:
+            initial_run = False
+            
+        if not initial_run:    
+            if (confidence_score!= args.confidence_score) or \
+            (standard_value != args.standard_value) or \
+            (salt != int(args.salt)) or \
+            (charge != int(args.charge)) or \
+            (fingerprint != args.fingerprint) or \
+            (nBits != args.nBits) or \
+            (radius != args.radius) or \
+            (CTA_Tc != args.CTA_Tc):        
+                print(desc, file=log)      
+                print('\nThe steps to creat the CTA with default parameter options take approximately 12 hours to complete.')
+                inp = input('Would you like to continue with the new parameter options? ([y]/n): ').strip().lower() or 'y'
+              
+            else:
+                print('\nThe CTA reference dataset has already been created with the given parameter options!', file=log)                  
+                inp = 'n'            
+            
+        if initial_run or inp == 'y':  
+            print('\nStarting the generating steps. Estimated completion time is around 12 hours.', file=log)      
+            
+            # Preprocess all ChEMBL SMILES strings, clean and generate fingerprints by RDKit and MolVS.
+            clean_ChEMBL_structures = preprocess_ChEMBL_SMILES(log, args)  
+            ChEMBL_fps = clean_ChEMBL_structures[['uniprot', 'molregno', 'fp_base64']].drop_duplicates().reset_index(drop=True)
+            ChEMBL_fps['fp'] = ChEMBL_fps['fp_base64'].apply(lambda x: convert_from_base64(args, x))      
+                    
+            # Preprocess all NPs SMILES strings, clean and generate fingerprints by RDKit and MolVS.
+            fname = args.NPs_resource[0]                
+            clean_NPs_structures = preprocess_NPs_SMILES(log, args, fname)        
+            clean_NPs_structures['fp'] = clean_NPs_structures['fp_base64'].apply(lambda x: convert_from_base64(args, x))    
+            
+            # Extracting unique UniProt identifiers for ChEMBL targets interacting with similar compounds
+            interact_ChEMBL_targets = CTA_conductSS(log, args, clean_NPs_structures[['smiles_id', 'fp']], ChEMBL_fps[['uniprot', 'molregno', 'fp']], args.CTA_Tc)  
+            
+            if len(interact_ChEMBL_targets) > 0:                                                    
+            
                 # Creating a subset of ChEMBL structures data containing only interactions with identified targets
                 partial_ChEMBL = clean_ChEMBL_structures[clean_ChEMBL_structures['uniprot'].isin(interact_ChEMBL_targets)].reset_index(drop=True)
                 
@@ -397,51 +410,48 @@ def generate_CTA_reference_dataset(log, args):
                 #partial_ChEMBL.to_csv(os.path.join(args.outputPath,'subset_of_ChEMBL.csv'), index=False, float_format='%.4f')
                 
                 # Creating compound-target activity pairs.      
-                CTA = createCTA(log, args, partial_ChEMBL)        
-                
-                if len(CTA) > 0:                               
+                CTA = createCTA(log, args, partial_ChEMBL)      
                     
-                    # Update CTA data set table                    
-                    mini_chembl_cur.executescript('''
-                    DROP TABLE IF EXISTS CTA_smiles;
+                # Update CTA data set table                    
+                mini_chembl_cur.executescript('''
+                DROP TABLE IF EXISTS CTA_smiles;
+            
+                CREATE TABLE CTA_smiles (
+                molregno BIGINT NOT NULL,
+                smiles VARCHAR(4000),
+                CONSTRAINT pk_molregno_CTA PRIMARY KEY (molregno)
+                );''')                            
                 
-                    CREATE TABLE CTA_smiles (
-                    molregno BIGINT NOT NULL,
-                    smiles VARCHAR(4000),
-                    CONSTRAINT pk_molregno_CTA PRIMARY KEY (molregno)
-                    );''')                            
-                    
-                    CTA_smiles = CTA.drop_duplicates(subset=['molregno']).reset_index(drop=True)
-                    for idx, row in CTA_smiles.iterrows():
-                        mini_chembl_cur.execute('''INSERT INTO CTA_smiles (molregno, smiles)
-                         VALUES (?, ?)''', (row['molregno'], row['smiles']))
-                    
-                    mini_chembl_cur.executescript('''
-                    DROP TABLE IF EXISTS CTA_activity;
+                CTA_smiles = CTA.drop_duplicates(subset=['molregno']).reset_index(drop=True)
+                for idx, row in CTA_smiles.iterrows():
+                    mini_chembl_cur.execute('''INSERT INTO CTA_smiles (molregno, smiles)
+                     VALUES (?, ?)''', (row['molregno'], row['smiles']))
                 
-                    CREATE TABLE CTA_activity (
-                    molregno BIGINT NOT NULL,
-                    uniprot VARCHAR(25),
-                    standard_type VARCHAR(250),
-                    pchembl_value NUMERIC(4, 2),
-                    target_chembl_id VARCHAR(20) NOT NULL,
-                    CONSTRAINT fk_molregno_CTA FOREIGN KEY(molregno) REFERENCES CTA_smiles (molregno) ON DELETE CASCADE
-                    );''')        
-                                        
-                    for idx, row in CTA.iterrows():
-                        mini_chembl_cur.execute('''INSERT INTO CTA_activity (molregno, uniprot, standard_type, pchembl_value, target_chembl_id)
-                         VALUES (?, ?, ?, ?, ?)''', (row['molregno'], row['uniprot'], row['standard_type'], row['pchembl_value'], row['target_chembl_id']))
-                         
-                    # Update parameter setting table                 
-                    mini_chembl_cur.execute('''UPDATE  init SET  confidence_score=?, standard_value=?, 
-                    salt=?, charge=?, fingerprint=? , nBits=?, radius=?, CTA_Tc=?''', (args.confidence_score,args.standard_value, int(args.salt),int(args.charge),
-                                                                                       args.fingerprint,args.nBits,args.radius, args.CTA_Tc)) 
-                                                         
-                    mini_chembl.commit()
-                    mini_chembl_cur.close()
-                    mini_chembl.close()
-            else:
-                return
+                mini_chembl_cur.executescript('''
+                DROP TABLE IF EXISTS CTA_activity;
+            
+                CREATE TABLE CTA_activity (
+                molregno BIGINT NOT NULL,
+                uniprot VARCHAR(25),
+                standard_type VARCHAR(250),
+                pchembl_value NUMERIC(4, 2),
+                target_chembl_id VARCHAR(20) NOT NULL,
+                CONSTRAINT fk_molregno_CTA FOREIGN KEY(molregno) REFERENCES CTA_smiles (molregno) ON DELETE CASCADE
+                );''')        
+                                    
+                for idx, row in CTA.iterrows():
+                    mini_chembl_cur.execute('''INSERT INTO CTA_activity (molregno, uniprot, standard_type, pchembl_value, target_chembl_id)
+                     VALUES (?, ?, ?, ?, ?)''', (row['molregno'], row['uniprot'], row['standard_type'], row['pchembl_value'], row['target_chembl_id']))
+                     
+                # Update parameter setting table                 
+                mini_chembl_cur.execute('''UPDATE  init SET  confidence_score=?, standard_value=?, 
+                salt=?, charge=?, fingerprint=? , nBits=?, radius=?, CTA_Tc=?''', (args.confidence_score,args.standard_value, int(args.salt),int(args.charge),
+                                                                                   args.fingerprint,args.nBits,args.radius, args.CTA_Tc)) 
+                                                     
+                mini_chembl.commit()
+                mini_chembl_cur.close()
+                mini_chembl.close()
+            
     
     except NameError as e:
         print(f"An error occurred: {e}")
@@ -499,7 +509,7 @@ def preprocess_NPs_SMILES(log, args, fname):
         print(desc, file=log)
         time_s = time.time()        
         
-        NPs_info = pd.read_csv(fname) 
+        NPs_info = pd.read_csv(fname, sep=' ', header=None, names=['smiles', 'smiles_id']) 
         NPs_info = NPs_info.drop_duplicates(subset=['smiles']).reset_index(drop=True)
         
         print('Number of compounds in the NP scource file:', NPs_info.shape[0], file=log)
@@ -587,17 +597,27 @@ def CTA_conductSS(log, args, query_fps, reference_fps, Tc):
     query_fps = query_fps.drop_duplicates()    
     time_s = time.time()
        
+    # Showing the progress bar increases the estimated completion time to around 17 hours.
+    '''
     results = Parallel(n_jobs=args.n_jobs, backend="multiprocessing", batch_size=args.batch)(
-        delayed(ss)(args, row, reference_fps, Tc) for _, row in tqdm(query_fps.iterrows(), total=len(query_fps), desc="CTA conductSS"))
+        delayed(ss)(args, row, reference_fps, Tc) for _, row in tqdm(query_fps.iterrows(), total=len(query_fps), desc="CTA conductSS"))    
+    '''
+
+    # Estimated completion time without the progress bar is around 12 hours.
+    print('Estimated completion time without the progress bar is around 12 hours.')
+    print('Showing the progress bar increases the estimated completion time to around 17 hours.\n')
+    results = Parallel(n_jobs=args.n_jobs, backend="multiprocessing", batch_size=args.batch)(
+        delayed(ss)(args, row, reference_fps, Tc) for _, row in query_fps.iterrows())
+        
         
     # Flatten the list of lists and get unique UniProt IDs
     uniprot_ids = set(target for sublist in results for target in sublist)
     
     elapsed_time = time.time() - time_s
     if uniprot_ids:
-        print(f'Similarity searching completed in {elapsed_time:.2f} seconds.', file=log)
+        print(f'Similarity searches completed in {elapsed_time:.2f} seconds. The mini_chembl.db file has been updated with the generated CTA dataset.', file=log)
     else:
-        print('No similarities were found!', file=log)
+        print(f'No similarities were found!. The process completed in {elapsed_time:.2f} seconds.', file=log)
 
     return list(uniprot_ids)
     
@@ -651,7 +671,7 @@ def Query_conductSS(log, args, query_fps, reference_fps):
 
     if not df_result.empty:
         elapsed_time = time.time() - time_s
-        print(f'Similarity searching completed in {elapsed_time:.2f} seconds.', file=log)     
+        print(f'Similarity search completed in {elapsed_time:.2f} seconds.', file=log)     
     else:
         print('No similarities were found!', file=log)
 
@@ -775,7 +795,7 @@ def rankTargets(log, args, reference_dataset, dest):
         df.to_csv(f'{dest}_{top_k}.csv', index=False, float_format='%.4f')
 
     print(f'\nResults:', file=log)
-    print(f'\t{len(reference_dataset.uniprot.unique())} potential targets for {len(reference_dataset.smiles_id.unique())} SMILES strings.', file=log)
-    print(f"More details are stored in {dest}_{{k}}.csv", file=log)
+    print(f'\tIdentified {len(reference_dataset.uniprot.unique())} potential targets based on the mean similarity scores of the top k reference compounds for {len(reference_dataset.smiles_id.unique())} SMILES strings.', file=log)
+    print(f"\tAdditional details are stored in {dest}_{{k}}.csv", file=log)
 
     print(f'Retrieving the potential targets took {time.time() - time_s:.4f} seconds.', file=log)
