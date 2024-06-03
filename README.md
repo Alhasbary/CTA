@@ -21,7 +21,7 @@ Using RDKit, this tool enables chemical similarity searches, a fundamental step 
 The output of the first stage of the tool is a CTA reference dataset, which includes identified targets and their corresponding compounds from ChEMBL. This dataset is valuable for users to analyse and construct models, enabling accurate target predictions for NP compounds.
 
 ### 5. **rankTargets: Retrieving ranked potential targets**
-The output of the second stage of the tool consists of ranked lists for the chemical compounds in each input query list. These ranked lists contain identified potential targets based on the mean similarity scores of the top k (adjustable parameter option) similar reference compounds. If k is greater than 1, the tool generates potential target lists for each odd number value within the interval [1, k].
+The output of the second stage of the tool consists of ranked lists of potential targets for the chemical compounds in each input query list. These ranked lists are generated based on the mean similarity scores of the top k (user-defined parameter) similar reference compounds. If k is greater than 1, the tool generates potential target lists using the odd-numbered values within the interval [1, k].
 
 ## Parameter Settings
 The tool provides various parameters to customize the analysis. Below is a detailed description of each parameter, including its name, description, default value, and acceptable range or choices.
