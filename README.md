@@ -36,7 +36,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 | `nBits`          | Number of bits parameter that specifies the length of the generated fingerprint (avalon, ecfp, or fcfp).                                                       | `2048`         |
 | `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`  (ECFP4)          |
 | `CTA_Tc`         | Desired value for CTA 'Tc' similarity threshold (0.1-1.0).                                                                                                     | `0.85`         |
-| `k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `1`            |
+| `k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
 | `batch`          | Desired batch size value (16-512) for chunk-based searches based on memory size.                                                                               | `256`          |
 | `n_jobs`         | Number of CPU cores to use.                                                                                                                                   | `-1` (all available CPU cores) |
 | `agg`            | Desired aggregation type (min, max, mean, or median).                                                                                                          | `median`       |
@@ -131,7 +131,7 @@ This script takes SMILES-formatted input list(s) of natural product(s) and ident
    - output: Full path to save the results [Optional].
 
 - Output: 
-   - `QueryListN_potential_targets_based_on_top_k.csv`: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. If k is greater than 1, the tool generates potential target lists for each odd-numbered value within the interval [1, k].. 
+   - `QueryListN_potential_targets_based_on_fp_with_k_value_of_*.csv`: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. If k is greater than 1, the tool generates potential target lists for each odd-numbered value within the interval [1, k].. 
    
 - Usage:
    - For help:
