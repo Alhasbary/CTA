@@ -14,15 +14,14 @@ Responsible for cleaning SMILES strings using RDKit and MolVS, this tool perform
 
 ### 3. **conductSS: Conducting Chemical Similarity Searching**
 
-This tool enables chemical similarity searches, a fundamental step in ligand-based CTA prediction. It retrieves potential targets for each given SMILES string. Users can customize fingerprint settings, including type, nBits, and radius parameters that control substructure size. A similarity threshold (Tc) can also be specified.
+Using RDKit, this tool enables chemical similarity searches, a fundamental step in ligand-based CTA prediction. It retrieves potential targets for each given SMILES string. Users can customize fingerprint settings, including type, nBits, and radius parameters that control substructure size. A similarity threshold (Tc) can also be specified.
 
 ### 4. **createCTA: Creating Compound-Target Activity Pair Dataset**
 
 The output of the first stage of the tool is a CTA reference dataset, which includes identified targets and their corresponding compounds from ChEMBL. This dataset is valuable for users to analyse and construct models, enabling accurate target predictions for NP compounds.
 
 ### 5. **rankTargets: Retrieving ranked potential targets**
-The output of the second stage of the tool consists of two ranked lists of potential targets for each input query. The first list is based on the top similar reference compound, while the second list incorporates the mean of the top three similar reference compounds in the ranking calculations.
-
+The output of the second stage of the tool consists of ranked lists for the chemical compounds in each input query list. These ranked lists contain identified potential targets based on the mean similarity scores of the top k (adjustable parameter option) similar reference compounds. If k is greater than 1, the tool generates potential target lists for each odd number value within the interval [1, k].
 
 ## Parameter Settings
 The tool provides various parameters to customize the analysis. Below is a detailed description of each parameter, including its name, description, default value, and acceptable range or choices.
@@ -37,7 +36,7 @@ The tool provides various parameters to customize the analysis. Below is a detai
 | `nBits`          | Number of bits parameter that specifies the length of the generated fingerprint (avalon, ecfp, or fcfp).                                                       | `2048`         |
 | `radius`         | Desired radius value for Morgan ECFP/FCFP fingerprints (2 or 3).                                                                                               | `2`  (ECFP4)          |
 | `CTA_Tc`         | Desired value for CTA 'Tc' similarity threshold (0.1-1.0).                                                                                                     | `0.85`         |
-| `k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `3`            |
+| `k`          | Desired value for 'top-k' reference compounds (1-11).                                                                                                          | `1`            |
 | `batch`          | Desired batch size value (16-512) for chunk-based searches based on memory size.                                                                               | `256`          |
 | `n_jobs`         | Number of CPU cores to use.                                                                                                                                   | `-1` (all available CPU cores) |
 | `agg`            | Desired aggregation type (min, max, mean, or median).                                                                                                          | `median`       |
@@ -56,7 +55,8 @@ The tool provides various parameters to customize the analysis. Below is a detai
 ## Installation
 
 1. Download the repository and extract files to your desired location.
-2. Download the ChEMBL SQLite dataset from [ChEMBL Downloads](https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/) (***if needed, see Usage section***).
+2. Download the ChEMBL SQLite dataset from [ChEMBL Downloads](https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/releases/)
+2. Download the COCONUT SMILES dataset from [COCONUT Downloads](https://coconut.naturalproducts.net/download/)
 3. Open a command-line window (Windows) or a terminal (Linux).
 4. Run the Python scripts as described below.
 
@@ -65,7 +65,6 @@ The tool provides various parameters to customize the analysis. Below is a detai
 ### Create a Custom mini-ChEMBL SQLite Database. 
 
 Create a custom mini-ChEMBL SQLite database tailored to fulfill specific application requirements. In our case, it significantly reduces the storage size from 22.4 GB (ChEMBL32) to just 714 MB.
-***This step was performed in advance using the default parameter values and does not need to be rerun unless users wish to change the default parameter options or use different version of ChEMBL database.***
 
 - Inputs:
    - data: Full path to the ChEMBL dataset [Required].
@@ -91,18 +90,19 @@ Create a custom mini-ChEMBL SQLite database tailored to fulfill specific applica
      python mini_chembl.py --data=chembl_32/chembl_32_sqlite/chembl_32.db --destination=input
      ```
 
-### Genrate the Compound-Target Activity (CTA) reference dataset
+### Create a Compound-Target Activity (CTA) dataset
 
-ChEMBL version 32.0, COCONUT version 1.0 datasets were utilized to create the CTA reference dataset. 
-***This step was performed in advance using the default parameter values and does not need to be rerun unless users wish to change the default parameter options or use different datasets resource than ChEMBL version 32.0 and COCONUT version 1.0***
+Create a Compound-Target Activity (CTA) dataset to be used as a reference dataset in similarity-based search techniques to identify potential targets. After downloading the COCONUT SMILES dataset (a tab-separated text file), rename the file to NPs_resource.smi.
+
+***Note:*** The steps to create the CTA with default parameter options and datasets take approximately 12 hours to complete. Therefore, this step is performed once using the preferred parameter options and does not need to be rerun unless users wish to change the parameter options or use different datasets/versions than ChEMBL and COCONUT.
 
 - Inputs:
    - List of optional parameters.
-   - input: Full path to the data folder containing the NP recource list named "NPs_resource.csv" and the mini-ChEMBL database [Optional]. The NPs_resource file must be a CSV file containing SMILES strings in a column named 'smiles' and compound IDs in a column named 'smiles_id'.
+   - input: Full path to the data folder containing the NP recource list named "NPs_resource.smi" and the mini-ChEMBL database [Optional]. The NPs_resource file must be a tab-separated text file containing SMILES strings in the first column and compound IDs in the second column.
    - output: Full path to save the results [Optional].
 
 - Output:
-   - `CTA_dataset.csv`: Stores the CTA dataset.
+   - An updated version of the `mini_chembl.db` file, which includes the CTA dataset.
 
 - Usage:
    - For help:
@@ -125,13 +125,11 @@ This script takes SMILES-formatted input list(s) of natural product(s) and ident
 
 - Inputs:
    - List of optional parameters.
-   - input: Full path to the data folder containing SMILES string lists (e.g., `*_smiles.csv`) and the mini-ChEMBL database [Optional]. 
-            It may contain more than one list. The tool processes them sequentially. Each file must be a CSV file that contains smiles strings in a column named 'smiles' and compound id in a column named 'smiles_id'.
+   - input: Full path to the data folder containing SMILES string lists (e.g., QueryList1_smiles.csv) and the mini-ChEMBL database [Optional]. The folder may contain multiple lists; the tool processes them sequentially. Ensure the file names follow the pattern: QueryListN_smiles.csv, where N is an integer. Each file must be a CSV file with a column named 'smiles' for SMILES strings and a column named 'smiles_id' for compound IDs.
    - output: Full path to save the results [Optional].
 
 - Output: 
-   - `*_potential_targets_based_on_top_k.csv`: Contains identify potential targets for the chemical compounds in each dataset based on the mean similarity scores of the top k similar reference compounds. 
-                                            If k is greater than 1, the tool generates a potential target list for each odd number value within the interval [1, k]. 
+   - `QueryListN_potential_targets_based_on_top_k.csv`: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. If k is greater than 1, the tool generates potential target lists for each odd-numbered value within the interval [1, k].. 
    
 - Usage:
    - For help:
