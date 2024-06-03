@@ -1,13 +1,18 @@
+
 """
-This file is part of the Compound-Target Activity (CTA) Prediction Program, used to create the CTA reference dataset.
+This file is part of the Compound-Target Activity (CTA) Prediction Program, used to create a CTA dataset to be employed as a reference dataset in similarity-based search techniques to identify potential targets. 
+After downloading the COCONUT SMILES dataset (a tab-separated text file), rename the file to NPs_resource.smi.
+
+Note: The steps to create the CTA with default parameter options and datasets take approximately 12 hours to complete. 
+Therefore, this step is performed once using the preferred parameter options and does not need to be rerun unless users wish to change the parameter options or use different datasets/versions than ChEMBL and COCONUT.
 
 Inputs:
    - List of optional parameters.
-   - input: Full path to the data folder containing the NP recource list named "NPs_resource.csv" and the mini-ChEMBL database [Optional]. The NPs_resource file must be a CSV file containing SMILES strings in a column named 'smiles' and compound IDs in a column named 'smiles_id'.
+   - input: Full path to the data folder containing the NP recource list named "NPs_resource.smi" and the mini-ChEMBL database [Optional]. The NPs_resource file must be a tab-separated text file containing SMILES strings in the first column and compound IDs in the second column.
    - output: Full path to save the results [Optional].
 
 Output:
-   - `CTA_dataset.csv`: Stores the CTA dataset.
+   - An updated version of the mini_chembl.db file, which includes the CTA dataset.
 
 Usage:
    - For help:
@@ -16,15 +21,15 @@ Usage:
      python generate_CTA.py [parameters] --input=FullPathToInputFiles --output=FullPathToSaveResults
 
 Usage Example:
-    python generate_CTA.py
+    - Download and rename the file COCONUT_DB.smi to NPs_resource.smi and place it in the input folder.
+    - Run the program:
+      python generate_CTA.py
 
 Prepared By: Alhasbary
 Date: 05/06/2024
 """
-
 import sys
 from SharedFunc import *
-
 
 def main():
     # get inputs
@@ -54,5 +59,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
- 
