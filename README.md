@@ -115,6 +115,8 @@ Create a Compound-Target Activity (CTA) dataset to be used as a reference datase
      ```
   
 - Usage Example:
+    1. Download and rename the file `COCONUT_DB.smi` to `NPs_resource.smi` and place it in the `input` folder.
+    2. Run the program:
      ```
      python generate_CTA.py
      ```
