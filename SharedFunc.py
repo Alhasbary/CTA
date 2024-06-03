@@ -63,7 +63,7 @@ def parse_args():
                         help="Desired aggregation type (min, max, mean, or median). default=median")
     parser.add_argument("--minCompounds", action="store", type=int_range(1, 10000), default=1,
                         dest="minCompounds", help="Number of compounds that specifies the smallest target size in the "
-                                                  "compound-target pair data set. default=10")
+                                                  "compound-target pair data set. default=1")
     parser.add_argument("--maxCompounds", action="store", type=int_range(1, 10000), default=10000,
                         dest="maxCompounds", help="Number of compounds that specifies the largest target size in the "
                                                   "compound-target pair data set. default=10000")
