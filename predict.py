@@ -9,7 +9,7 @@ Inputs:
    - output: Full path to save the results [Optional].
 
 Output: 
-   - QueryListN_potential_targets_based_on_top_k.csv: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. 
+   - QueryListN_potential_targets_based_on_fp_with_k_value_of_*.csv: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. 
                                                       If k is greater than 1, the tool generates potential target lists for each odd-numbered value within the interval [1, k].
    
 Usage:
@@ -28,6 +28,7 @@ Date: 05/06/2024
 import argparse
 import sys
 from SharedFunc import *
+
 
 def main():
     # get inputs
@@ -60,6 +61,7 @@ def main():
     print(desc, file=log)
     
     try:    
+
         time_s = time.time()
         dbname = args.mini_chembl[0]        
         sqlstr = f'''select DISTINCT
@@ -74,15 +76,18 @@ def main():
         CTA = CTA[columns]                
         # Remove rows that have same info but difference molregno        
         CTA = CTA.drop_duplicates(subset=CTA.columns.difference(['molregno'])).reset_index(drop=True)  
+        print_statistics(log, CTA)
         print(f'Retrieving took {time.time() - time_s:.4f} seconds.', file=log)     
         
         CTA_fps = CTA_gen_fps(log, args, CTA)   
 
         # Merge 
-        CTA = CTA.merge(CTA_fps, on='molregno', how='inner')                
+        CTA = CTA.merge(CTA_fps, on='molregno', how='inner')        
+        
     except NameError as e:
         print(f"An error occurred: {e}")
         exit(0)
+
     print(f"\nStart processing the {args.datNames} Query sets:", file=log)       
     
     for db_name in args.datNames:
@@ -107,7 +112,7 @@ def main():
         if len(CTA_similarity) > 0:            
            
             # Retrieve potential targets for each smiles string according to the mean similarity scores of K nearest neighbors.
-            potential_targets_path = os.path.join(args.outputPath, f"using_{args.fingerprint}_the_{db_name}_potential_targets_based_on_top_")
+            potential_targets_path = os.path.join(args.outputPath, f"{db_name}_potential_targets_based_on_{args.fingerprint}_with_k_value_of")
             rankTargets(log, args, CTA_similarity, potential_targets_path)   
             
             del CTA_similarity
@@ -119,4 +124,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-   
+
+ 
