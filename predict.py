@@ -1,17 +1,16 @@
-
 """
-Compound-Target Activity (CTA) Prediction Program.
 This file is part of the Compound-Target Activity (CTA) Prediction Program, used to identify the potential target(s).
 
 Inputs:
    - List of optional parameters.
-   - input: Full path to the data folder containing SMILES string lists (e.g., *_smiles.csv) and the mini-ChEMBL database [Optional]. 
-            It may contain more than one list. The tool processes them sequentially. Each file must be a CSV file that contains smiles strings in a column named 'smiles' and compound id in a column named 'smiles_id'.
+   - input: Full path to the data folder containing SMILES string lists (e.g., QueryList1_smiles.csv) and the mini-ChEMBL database [Optional]. 
+            The folder may contain multiple lists; the tool processes them sequentially. Ensure the file names follow the pattern: QueryListN_smiles.csv, where N is an integer. 
+            Each file must be a CSV file with a column named 'smiles' for SMILES strings and a column named 'smiles_id' for compound IDs.
    - output: Full path to save the results [Optional].
 
 Output: 
-   - `*_potential_targets_based_on_top_k.csv`: Contains identify potential targets for the chemical compounds in each dataset based on the mean similarity scores of the top k similar reference compounds. 
-                                            If k is greater than 1, the tool generates a potential target list for each odd number value within the interval [1, k]. 
+   - QueryListN_potential_targets_based_on_top_k.csv: Identifies potential targets for the chemical compounds in the query list based on the mean similarity scores of the top k similar reference compounds. 
+                                                      If k is greater than 1, the tool generates potential target lists for each odd-numbered value within the interval [1, k].
    
 Usage:
    - For help:
@@ -29,7 +28,6 @@ Date: 05/06/2024
 import argparse
 import sys
 from SharedFunc import *
-
 
 def main():
     # get inputs
@@ -62,7 +60,6 @@ def main():
     print(desc, file=log)
     
     try:    
-
         time_s = time.time()
         dbname = args.mini_chembl[0]        
         sqlstr = f'''select DISTINCT
@@ -82,12 +79,10 @@ def main():
         CTA_fps = CTA_gen_fps(log, args, CTA)   
 
         # Merge 
-        CTA = CTA.merge(CTA_fps, on='molregno', how='inner')        
-        
+        CTA = CTA.merge(CTA_fps, on='molregno', how='inner')                
     except NameError as e:
         print(f"An error occurred: {e}")
         exit(0)
-
     print(f"\nStart processing the {args.datNames} Query sets:", file=log)       
     
     for db_name in args.datNames:
@@ -124,5 +119,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
- 
+   
