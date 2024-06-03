@@ -274,7 +274,7 @@ def create_mini_chembl_database(dataPath, destinationPath='input'):
         
         # Create a parameter options table that includes default values for each parameter...
         mini_chembl_cur.execute('''INSERT INTO init (confidence_score, standard_value, salt, charge, fingerprint, nBits, radius, CTA_Tc) 
-        VALUES (8, 10000.0, 1, 1, 'ecfp', 2048, 2, 0.85)''')
+        VALUES (8, 10000.0, 1, 1, 'ecfp', 2048, 2, 100)''')
 
 
         # Commit the changes
